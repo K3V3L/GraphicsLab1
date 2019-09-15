@@ -4,4 +4,4 @@ compile: source.cpp
 run: main
 	./main
 clean: 
-	rm -rf main
+	mv main mainbak
