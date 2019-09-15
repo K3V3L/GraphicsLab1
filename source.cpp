@@ -26,68 +26,79 @@ int main(int argc, char** argv) {
   glutReshapeFunc(changeSize);
   glutMainLoop();
 }
+void drawShape(){
+  glBegin(GL_TRIANGLES);
+  glVertex2f(-0.82,-0.08);
+  glVertex2f(-0.26, 0.48);
+  glVertex2f(-0.26, -0.08);
 
+  glVertex2f(-0.26, 0.33);
+  glVertex2f(-0.26,-0.08);
+  glVertex2f(0.2, -0.08);
+
+  glVertex2f(-0.26, -0.08);
+  glVertex2f(0.04,0.08);
+  glVertex2f(-0.26,-0.37);
+
+  glVertex2f(-0.26, 0.33);
+  glVertex2f(0.2, -0.08);
+  glVertex2f(0.61, 0.33);
+
+  glVertex2f(0.2, -0.08);
+  glVertex2f(0.42, 0.14);
+  glVertex2f(0.61, -0.08);
+
+  glEnd();
+
+  glBegin(GL_QUADS);
+
+  glVertex2f(0.42, 0.14);
+  glVertex2f(0.61, -0.08);
+  glVertex2f(0.85, 0.14);
+  glVertex2f(0.61, 0.33);
+  
+
+  glVertex2f(0.85, 0.14);
+  glVertex2f(0.61, 0.33);
+  glVertex2f(0.61, -0.5);
+  glVertex2f(0.85, -0.33);
+  glEnd();
+
+}
 void render(void) {
   glLoadIdentity();
   glOrtho(-1+vpx, 1+vpx, -1+vpy, 1+vpy, -1, 1);
-  glClearColor(1, 1, 0, 1);
+  glClearColor((float)15/255, (float)252/255, (float)9/255, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glColor3f(0, 0, 1);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  glColor3f((float)147/255, (float)128/255, (float)4/255);
+  glPolygonMode(GL_FRONT, GL_FILL);
   //glOrtho(-1.1,1.1,-1.1,1.1,-1,1);
-  glBegin(GL_QUADS);
-  
-  glVertex2f(-0.2, 0.5);
-  glVertex2f(0, 0.5);
-  glVertex2f(0, 0.3); 
-  glVertex2f(-0.2, 0.3);
-
-  glVertex2f(0,0.5);
-  glVertex2f(0.1, 0.7);
-  glVertex2f(0.5,0.7);
-  glVertex2f(0.4,0.5);
-  
-  glEnd();
-  glBegin(GL_TRIANGLES);
-  glVertex2f(0,0.3);
-  glVertex2f(0.5, -0.2);
-  glVertex2f(0, -0.2);
-
-  glVertex2f(0.5, -0.2);
-  glVertex2f(0, -0.2);
-  glVertex2f(0.5, -0.7);
-  glVertex2f(0.25,-0.45);
-
-  glVertex2f(0.5, -0.7);
-  glVertex2f(0,-0.7);
-  glVertex2f(0.25, -0.45);
-  glVertex2f(0,-0.7);
-
-  glVertex2f(0, -0.45);
-  glVertex2f(0, -0.1);
-  glVertex2f(-0.1, -0.2);
-  glVertex2f(0, -0.3);
-
-  glEnd();
+  drawShape();
   glutSwapBuffers();
 }
 
 void keyboard(unsigned char c, int x, int y)
 {
-  std::cout << (int)c << std::endl;
-  if((int)c == 43)
+  switch ((int)c)
   {
-    // +
+  case 43:
     vpx+=DELTA;
     vpy+=DELTA;
     std::cout << "+" << endl;
-  }
-  else if((int)c == 45)
-  {
+    break;
+
+  case 45:
     vpx-=DELTA;
     vpy-=DELTA;
     std::cout << "-" << endl;
+    break;
+  
+  case 133:
+    std::cout << "Q pressed, exiting...";
+    exit(0);
+    break;
   }
+
   cout << -1+vpx << " | " << 1+vpx << " | " << -1+vpy << " | " << 1+vpy << std::endl;
   glutPostRedisplay();
 }
@@ -97,5 +108,4 @@ void changeSize(int w, int h) {
  	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(45,ratio,1,1000);
-
 }
