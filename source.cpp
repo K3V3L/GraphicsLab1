@@ -94,14 +94,16 @@ void drawOutline() {
   glVertex2f(-0.26, 0.33);
   glVertex2f(0.2, -0.08);
   glVertex2f(0.61, 0.33);
-
+  glVertex2f(-0.26, 0.33);
+ 
   glEnd();
   glBegin(GL_LINE_STRIP);
 
   glVertex2f(0.2, -0.08);
   glVertex2f(0.42, 0.14);
   glVertex2f(0.61, -0.08);
-
+  glVertex2f(0.2, -0.08);
+ 
   glEnd();
   glBegin(GL_LINE_STRIP);
 
@@ -109,7 +111,8 @@ void drawOutline() {
   glVertex2f(0.61, -0.08);
   glVertex2f(0.85, 0.14);
   glVertex2f(0.61, 0.33);
-
+  glVertex2f(0.42, 0.14);
+ 
   glEnd();
   glBegin(GL_LINE_STRIP);
 
@@ -117,7 +120,8 @@ void drawOutline() {
   glVertex2f(0.61, 0.33);
   glVertex2f(0.61, -0.5);
   glVertex2f(0.85, -0.33);
-  glEnd();
+  glVertex2f(0.85, 0.14);
+   glEnd();
 }
 
 void render(void) {
@@ -127,7 +131,7 @@ void render(void) {
   glClear(GL_COLOR_BUFFER_BIT);
   glColor3f((float)147 / 255, (float)128 / 255, (float)4 / 255);
   drawShape();
-  glColor3f((float)74 / 255, (float)31 / 255, (float)0 / 255);
+  glColor3f((float)179/ 255, (float)179/ 255, (float)5/ 255);
   drawOutline();
   glutSwapBuffers();
 }
