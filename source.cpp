@@ -10,15 +10,13 @@
 void changeSize(int w, int h);
 void render(void);
 void keyboard(unsigned char c, int x, int y);
-void mouse(int button, int state, int x, int y);
 
 double vpx=0,vpy=0;
 
 int main(int argc, char** argv) {
   glutInit(&argc, argv);
-  glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB);
-  glutInitWindowPosition(100, 100);
-  glutInitWindowSize(600, 600);
+  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+  glutInitWindowSize(800, 800);
   glutCreateWindow("Graphics Lab1");
   glMatrixMode(GL_PROJECTION);
   glutDisplayFunc(render);
@@ -71,7 +69,7 @@ void render(void) {
   glLoadIdentity();
   glOrtho(-1+vpx, 1+vpx, -1+vpy, 1+vpy, -1, 1);
   glClearColor((float)15/255, (float)252/255, (float)9/255, 1);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT);
   glColor3f((float)147/255, (float)128/255, (float)4/255);
   glPolygonMode(GL_FRONT, GL_FILL);
   drawShape();
@@ -82,24 +80,23 @@ void keyboard(unsigned char c, int x, int y)
 {
   switch ((int)c)
   {
-  case 43:
+  case 43: //+
     vpx+=DELTA;
     vpy+=DELTA;
     std::cout << "+" << std::endl;
     break;
 
-  case 45:
+  case 45: //- 
     vpx-=DELTA;
     vpy-=DELTA;
     std::cout << "-" << std::endl;
     break;
   
-  case 133:
+  case 113: //Q
     std::cout << "Q pressed, exiting...";
     exit(0);
     break;
   }
-
   std::cout << -1+vpx << " | " << 1+vpx << " | " << -1+vpy << " | " << 1+vpy << std::endl;
   glutPostRedisplay();
 }
