@@ -36,7 +36,7 @@ void drawShape(){
   glVertex2f(0.2, -0.08);
 
   glVertex2f(-0.26, -0.08);
-  glVertex2f(0.04,0.08);
+  glVertex2f(0.04,-0.08);
   glVertex2f(-0.26,-0.37);
 
   glVertex2f(-0.26, 0.33);
@@ -55,14 +55,70 @@ void drawShape(){
   glVertex2f(0.61, -0.08);
   glVertex2f(0.85, 0.14);
   glVertex2f(0.61, 0.33);
-  
 
   glVertex2f(0.85, 0.14);
   glVertex2f(0.61, 0.33);
   glVertex2f(0.61, -0.5);
   glVertex2f(0.85, -0.33);
   glEnd();
+}
 
+void drawOutline(){
+glLineWidth(3.0);
+
+glBegin(GL_LINE_STRIP);  
+  glVertex2f(-0.82,-0.08);
+  glVertex2f(-0.26, 0.48);
+  glVertex2f(-0.26, -0.08);
+  glVertex2f(-0.82,-0.08);
+
+glEnd();
+glBegin(GL_LINE_STRIP);
+
+  glVertex2f(-0.26, 0.33);
+  glVertex2f(-0.26,-0.08);
+  glVertex2f(0.2, -0.08);
+  glVertex2f(-0.26, 0.33);
+
+glEnd();
+glBegin(GL_LINE_STRIP);
+ 
+  glVertex2f(-0.26, -0.08);
+  glVertex2f(0.04,-0.08);
+  glVertex2f(-0.26,-0.37);
+  glVertex2f(-0.26, -0.08);
+
+glEnd();
+glBegin(GL_LINE_STRIP);
+   
+glVertex2f(-0.26, 0.33);
+  glVertex2f(0.2, -0.08);
+  glVertex2f(0.61, 0.33);
+
+glEnd();
+glBegin(GL_LINE_STRIP);
+ 
+  glVertex2f(0.2, -0.08);
+  glVertex2f(0.42, 0.14);
+  glVertex2f(0.61, -0.08);
+
+glEnd();
+glBegin(GL_LINE_STRIP);
+
+  glVertex2f(0.42, 0.14);
+  glVertex2f(0.61, -0.08);
+  glVertex2f(0.85, 0.14);
+  glVertex2f(0.61, 0.33);
+
+glEnd();
+glBegin(GL_LINE_STRIP);
+
+
+  glVertex2f(0.85, 0.14);
+  glVertex2f(0.61, 0.33);
+  glVertex2f(0.61, -0.5);
+  glVertex2f(0.85, -0.33);
+ glEnd(); 
 }
 
 void render(void) {
@@ -71,8 +127,9 @@ void render(void) {
   glClearColor((float)15/255, (float)252/255, (float)9/255, 1);
   glClear(GL_COLOR_BUFFER_BIT);
   glColor3f((float)147/255, (float)128/255, (float)4/255);
-  glPolygonMode(GL_FRONT, GL_FILL);
-  drawShape();
+drawShape();
+glColor3f((float)74/255, (float)31/255, (float)0/255);
+drawOutline();
   glutSwapBuffers();
 }
 
