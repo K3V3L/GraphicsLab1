@@ -2,10 +2,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-//#include <GL/glext.h>
 #include <iostream>
 #include <math.h>
-
 
 float angleX=0.0, angleY=0.0;
 float lx=0.0f,ly=0.0f,lz=-1.0f;
@@ -24,7 +22,6 @@ int main(int argc, char *argv[])
 	glutDisplayFunc(Display);
 	glutReshapeFunc(changeSize);
 	glutKeyboardFunc(Keyboard);
-	glEnable(GL_DEPTH_TEST);
 	glutMainLoop();
 	return 1;
 }
@@ -108,7 +105,8 @@ void Keyboard(unsigned char key, int xx, int yy) {
 			break;
 	}
     glutPostRedisplay();
+	std::cout << 
+	"Pos:\t\t" << x << " ; " << y << " ; " << z
+	 << std::endl <<
+	 "LookDir:\t" << angleX << " ; " << angleY << std::endl << std::endl;
 }
-
-
-
