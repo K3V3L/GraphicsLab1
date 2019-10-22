@@ -4,165 +4,111 @@
 #include <GL/glut.h>
 //#include <GL/glext.h>
 #include <iostream>
+#include <math.h>
 
-#define DELTA 0.05
+
+float angleX=0.0, angleY=0.0;
+float lx=0.0f,ly=0.0f,lz=-1.0f;
+float x=0.0f,z=5.0f,y=1.0f;
 
 void changeSize(int w, int h);
-void render(void);
-void keyboard(unsigned char c, int x, int y);
-
-double vpx = 0, vpy = 0;
-
-int main(int argc, char **argv) {
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-  glutInitWindowSize(800, 800);
-  glutCreateWindow("Graphics Lab1");
-  glMatrixMode(GL_PROJECTION);
-  glutDisplayFunc(render);
-  glutKeyboardFunc(keyboard);
-  glutReshapeFunc(changeSize);
-  glutMainLoop();
-}
-
-void drawShape() {
-  glBegin(GL_TRIANGLES);
-  glVertex2f(-0.82, -0.08);
-  glVertex2f(-0.26, 0.48);
-  glVertex2f(-0.26, -0.08);
-
-  glVertex2f(-0.26, 0.33);
-  glVertex2f(-0.26, -0.08);
-  glVertex2f(0.2, -0.08);
-
-  glVertex2f(-0.26, -0.08);
-  glVertex2f(0.04, -0.08);
-  glVertex2f(-0.26, -0.37);
-
-  glVertex2f(-0.26, 0.33);
-  glVertex2f(0.2, -0.08);
-  glVertex2f(0.61, 0.33);
-
-  glVertex2f(0.2, -0.08);
-  glVertex2f(0.42, 0.14);
-  glVertex2f(0.61, -0.08);
-
-  glEnd();
-
-  glBegin(GL_QUADS);
-
-  glVertex2f(0.42, 0.14);
-  glVertex2f(0.61, -0.08);
-  glVertex2f(0.85, 0.14);
-  glVertex2f(0.61, 0.33);
-
-  glVertex2f(0.85, 0.14);
-  glVertex2f(0.61, 0.33);
-  glVertex2f(0.61, -0.5);
-  glVertex2f(0.85, -0.33);
-  glEnd();
-}
-
-void drawOutline() {
-  glLineWidth(3.0);
-
-  glBegin(GL_LINE_STRIP);
-  glVertex2f(-0.82, -0.08);
-  glVertex2f(-0.26, 0.48);
-  glVertex2f(-0.26, -0.08);
-  glVertex2f(-0.82, -0.08);
-
-  glEnd();
-  glBegin(GL_LINE_STRIP);
-
-  glVertex2f(-0.26, 0.33);
-  glVertex2f(-0.26, -0.08);
-  glVertex2f(0.2, -0.08);
-  glVertex2f(-0.26, 0.33);
-
-  glEnd();
-  glBegin(GL_LINE_STRIP);
-
-  glVertex2f(-0.26, -0.08);
-  glVertex2f(0.04, -0.08);
-  glVertex2f(-0.26, -0.37);
-  glVertex2f(-0.26, -0.08);
-
-  glEnd();
-  glBegin(GL_LINE_STRIP);
-
-  glVertex2f(-0.26, 0.33);
-  glVertex2f(0.2, -0.08);
-  glVertex2f(0.61, 0.33);
-  glVertex2f(-0.26, 0.33);
- 
-  glEnd();
-  glBegin(GL_LINE_STRIP);
-
-  glVertex2f(0.2, -0.08);
-  glVertex2f(0.42, 0.14);
-  glVertex2f(0.61, -0.08);
-  glVertex2f(0.2, -0.08);
- 
-  glEnd();
-  glBegin(GL_LINE_STRIP);
-
-  glVertex2f(0.42, 0.14);
-  glVertex2f(0.61, -0.08);
-  glVertex2f(0.85, 0.14);
-  glVertex2f(0.61, 0.33);
-  glVertex2f(0.42, 0.14);
- 
-  glEnd();
-  glBegin(GL_LINE_STRIP);
-
-  glVertex2f(0.85, 0.14);
-  glVertex2f(0.61, 0.33);
-  glVertex2f(0.61, -0.5);
-  glVertex2f(0.85, -0.33);
-  glVertex2f(0.85, 0.14);
-   glEnd();
-}
-
-void render(void) {
-  glLoadIdentity();
-  glOrtho(-1 + vpx, 1 + vpx, -1 + vpy, 1 + vpy, -1, 1);
-  glClearColor((float)15 / 255, (float)252 / 255, (float)9 / 255, 1);
-  glClear(GL_COLOR_BUFFER_BIT);
-  glColor3f((float)147 / 255, (float)128 / 255, (float)4 / 255);
-  drawShape();
-  glColor3f((float)179/ 255, (float)179/ 255, (float)5/ 255);
-  drawOutline();
-  glutSwapBuffers();
-}
-
-void keyboard(unsigned char c, int x, int y) {
-  switch ((int)c) {
-  case 43: //+
-    vpx += DELTA;
-    vpy += DELTA;
-    std::cout << "+" << std::endl;
-    break;
-
-  case 45: //-
-    vpx -= DELTA;
-    vpy -= DELTA;
-    std::cout << "-" << std::endl;
-    break;
-
-  case 113: // Q
-    std::cout << "Q pressed, exiting...";
-    exit(0);
-    break;
-  }
-  std::cout << -1 + vpx << " | " << 1 + vpx << " | " << -1 + vpy << " | "
-            << 1 + vpy << std::endl;
-  glutPostRedisplay();
+void drawAxis();
+void Display(void);
+void Keyboard(unsigned char key, int xx, int yy);
+int main(int argc, char *argv[])
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitWindowSize(800, 600);
+    glutCreateWindow("Lab2");
+	glutDisplayFunc(Display);
+	glutReshapeFunc(changeSize);
+	glutKeyboardFunc(Keyboard);
+	glEnable(GL_DEPTH_TEST);
+	glutMainLoop();
+	return 1;
 }
 
 void changeSize(int w, int h) {
-  float ratio = 1.0 * w / h;
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(45, ratio, 1, 1000);
+	if (h == 0)
+		h = 1;
+	float ratio =  w * 1.0 / h;
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glViewport(0, 0, w, h);
+	gluPerspective(45.0f, ratio, 0.1f, 100.0f);
+	glMatrixMode(GL_MODELVIEW);
 }
+void drawAxis(){
+        glBegin(GL_LINES);
+    glColor3f(1,0,0);
+    glVertex3f(0,0,0);
+    glVertex3f(100,0,0);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(0,1,0);
+    glVertex3f(0,0,0);
+    glVertex3f(0,100,0);
+    glEnd();
+    
+    glBegin(GL_LINES);
+    glColor3f(0,0,1);
+    glVertex3f(0,0,0);
+    glVertex3f(0,0,100);
+    glEnd();
+}
+void Display(void) {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	gluLookAt(  x,      y,   z,
+			    x+lx,   y+ly,   z+lz,
+			    0.0f,   1.0f,   0.0f);
+    drawAxis();
+	for(int i = -3; i < 3; i++)
+		for(int j=-3; j < 3; j++) {
+			glPushMatrix();
+			glTranslatef(i*10.0,0,j * 10.0);
+			glutSolidSphere(1,20,20);
+			glPopMatrix();
+		}
+	glutSwapBuffers();
+}
+
+void Keyboard(unsigned char key, int xx, int yy) {
+	float fraction = 0.1f;
+	switch (key) {
+		case 'h':
+			angleX -= 0.03f;
+			lx = sin(angleX);
+			lz = -cos(angleX);
+			break;
+		case 'l':
+			angleX += 0.03f;
+			lx = sin(angleX);
+			lz = -cos(angleX);
+			break;
+        case 'j':
+			angleY -= 0.03f;
+			ly = sin(angleY);
+			lz = -cos(angleY);
+			break;
+        case 'k':
+			angleY += 0.03f;
+			ly = sin(angleY);
+			lz = -cos(angleY);
+			break;
+		case 'w':
+			x += lx * fraction;
+			z += lz * fraction;
+			break;
+		case 's':
+			x -= lx * fraction;
+			z -= lz * fraction;
+			break;
+	}
+    glutPostRedisplay();
+}
+
+
+
